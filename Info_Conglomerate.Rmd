@@ -1,0 +1,118 @@
+---
+title: "Info_Conglomerate"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Setup
+
+##loading packages
+```{r}
+if (!require('pacman')) install.packages('pacman')
+library(pacman)
+p_load(ISLR, insuranceData,tidyverse)
+```
+
+#Data Wrangling
+```{r}
+data(dataCar)
+xdata = dataCar[dataCar$clm!=0,] #or... xdata = dataCar %>% dplyr::filter(clm != 0)
+xdata = xdata[,-11] #or... xdata = xdata %>% dplyr::select(., -X_OBSTAT_)
+```
+
+
+#Descriptive Statistics
+##Class of Variables
+```{r}
+xdata
+sapply(xdata,class) #getting the class of every variable
+sapply(xdata,unique) #could be heavy with a lot of integers. Tells a lot about the data
+xdata = xdata %>%
+  dplyr::select(.,-clm) #include all variables except clm
+xdata = xdata %>% 
+  mutate(agecat = as.factor(agecat)) %>%
+  mutate(veh_age = as.factor(veh_age)) #changing variables to factors (tidyverse way)
+```
+
+#Graphs
+```{r}
+
+```
+
+
+
+#Prediction Methods
+
+##Linear Regression
+
+##K-nearest neighbor
+```{r}
+knn=function(x0,x,y,K=20)
+{
+d=abs(x-x0)
+o=order(d)[1:K]
+ypred=mean(y[o])
+return(ypred)
+}
+```
+
+
+##Classification Models
+
+##Resampling
+
+```{r}
+
+```
+
+##Cross-validation
+
+###single fold
+```{r}
+
+```
+###k-fold
+```{r}
+n=nrow(xdata)
+p=ncol(xdata)
+K=5
+testMSES=matrix(0,K,p+2)
+xvars=names(xdata[-4])
+colnames(testsMSES)=c('full',xvas,'naive')
+fold_size=floor(n/K)
+ii=1
+ind=sample(1:n,size=n)
+
+ydata=xdata[ind,]
+for(i in 1:K)
+{
+  trainign=ydata[-(ii:(ii+fold_size-1)),]
+  test=ydata[ii:(ii+fold_size-1)),]
+  ii=ii+fold_size
+  regfull=lm(y~.,data=training)
+  predfull=predict(regfull,newdata=test)
+  testMSES[i,1]=mean((test$y-predfull)^2)
+  for k in 1:*
+}
+```
+
+
+##Theboostrap
+
+##Linear Model Selection
+
+##Shrikage
+
+##Splines
+
+##GAM
+
+##Tree-based
+
+##Tree-based 2
+
+## Support Vector Machines
+
+##Unsupervised Learning
